@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Antra — Web Designer & AI Experience Builder. Premium responsive websites and practical AI-powered digital experiences." />
+  <meta name="theme-color" content="#17110d" />
+  <title>Antra — Web Designer & AI Experience Builder</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+
+    :root{
+      --ink:#211711;
+      --muted:#6f6258;
+      --paper:#f4eee5;
+      --paper-2:#ebe0d3;
+      --line:rgba(33,23,17,.16);
+      --accent:#b45d32;
+      --accent-dark:#8e4425;
+      --card:#fbf7f0;
+      --shadow:0 24px 70px rgba(49,31,19,.13);
+      --serif:"Playfair Display", Georgia, serif;
+      --sans:"DM Sans", Arial, sans-serif;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      color:var(--ink);
+      background:var(--paper);
+      font-family:var(--sans);
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+    button,a{ -webkit-tap-highlight-color:transparent }
+    .noise{
+      position:fixed;inset:0;pointer-events:none;z-index:20;opacity:.055;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+      mix-blend-mode:multiply;
+    }
+
+    .topbar{
+      position:sticky;top:0;z-index:15;
+      width:min(1180px,calc(100% - 40px));margin:0 auto;
+      min-height:76px;display:grid;grid-template-columns:1fr auto 1fr;
+      align-items:center;gap:28px;
+      border-bottom:1px solid var(--line);
+      background:rgba(244,238,229,.88);
+      backdrop-filter:blur(16px);
+    }
+    .brand{display:flex;align-items:center;gap:12px;font-weight:700;letter-spacing:.08em}
+    .brand-mark{
+      width:36px;height:36px;display:grid;place-items:center;
+      border:1px solid var(--ink);border-radius:50%;
+      font-family:var(--serif);font-size:20px;
+    }
+    nav{display:flex;gap:28px;font-size:13px;color:var(--muted)}
+    nav a,.top-cta{transition:color .2s ease,transform .2s ease}
+    nav a:hover,.top-cta:hover{color:var(--accent)}
+    .top-cta{
+      justify-self:end;border:1px solid var(--ink);padding:11px 16px;
+      border-radius:999px;font-size:12px;font-weight:700;letter-spacing:.04em;
+    }
+
+    main{width:min(1180px,calc(100% - 40px));margin:0 auto}
+    .hero{
+      min-height:calc(100vh - 76px);
+      display:grid;grid-template-columns:minmax(0,1.05fr) minmax(360px,.95fr);
+      gap:70px;align-items:center;padding:72px 0 86px;
+    }
+    .eyebrow,.section-kicker{
+      display:inline-flex;align-items:center;gap:10px;
+      color:#65715d;font-size:11px;font-weight:700;letter-spacing:.18em;
+    }
+    .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);display:inline-block}
+    h1,h2,h3,p{margin-top:0}
+    h1{
+      margin:24px 0 26px;
+      font:600 clamp(58px,7.2vw,100px)/.91 var(--serif);
+      letter-spacing:-.055em;
+      max-width:760px;
+    }
+    h1 span{color:var(--accent)}
+    .hero-text{
+      max-width:650px;color:#4e443d;
+      font-size:17px;line-height:1.75;
+    }
+    .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin:30px 0 26px}
+    .button{
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      min-height:48px;padding:0 20px;border-radius:999px;
+      border:1px solid var(--ink);font-size:13px;font-weight:700;
+      transition:transform .2s ease,background .2s ease,color .2s ease;
+    }
+    .button:hover{transform:translateY(-2px)}
+    .button.primary{background:var(--ink);color:var(--paper)}
+    .button.primary:hover{background:var(--accent-dark)}
+    .button.secondary{background:transparent}
+    .button.secondary:hover{background:var(--paper-2)}
+    .contact-strip{
+      display:flex;flex-wrap:wrap;gap:9px 13px;align-items:center;
+      color:var(--muted);font-size:12px;line-height:1.6;
+    }
+    .contact-strip a:hover{text-decoration:underline;text-underline-offset:4px}
+    .website-link{font-weight:700;color:var(--ink)}
+
+    .hero-card{
+      position:relative;
+      border:1px solid var(--line);
+      border-radius:28px;
+      padding:12px;
+      background:rgba(255,252,246,.58);
+      box-shadow:var(--shadow);
+      transform:rotate(1.1deg);
+    }
+    .window-bar{
+      height:44px;display:flex;align-items:center;gap:7px;
+      padding:0 13px;border-bottom:1px solid var(--line);
+      color:var(--muted);font-size:10px;
+    }
+    .window-bar>span{
+      width:8px;height:8px;border-radius:50%;background:#b6a99c;display:block;
+    }
+    .window-title{margin-left:8px;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .window-open{font-size:18px}
+    .hero-screen{
+      min-height:510px;position:relative;overflow:hidden;
+      border-radius:20px;background:#241914;color:#f7efe5;
+      padding:34px;
+    }
+    .screen-grid{
+      position:absolute;inset:0;opacity:.18;
+      background-image:linear-gradient(rgba(255,255,255,.13) 1px,transparent 1px),
+                        linear-gradient(90deg,rgba(255,255,255,.13) 1px,transparent 1px);
+      background-size:44px 44px;
+      mask-image:linear-gradient(to bottom,black,transparent 92%);
+    }
+    .screen-top{
+      position:relative;display:flex;justify-content:space-between;align-items:center;
+      font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    }
+    .screen-logo{font-family:var(--serif);font-size:20px;letter-spacing:.08em}
+    .screen-nav{display:flex;gap:18px;color:#cfc0b2;font-size:10px}
+    .screen-content{position:relative;margin-top:78px}
+    .screen-kicker{font-size:10px;letter-spacing:.18em;color:#c9b6a5}
+    .screen-headline{
+      margin:18px 0;font:600 clamp(48px,5vw,72px)/.9 var(--serif);
+      letter-spacing:-.055em;max-width:500px;
+    }
+    .screen-headline em{color:#d89568;font-style:normal}
+    .screen-copy{max-width:360px;color:#cdbfb2;font-size:12px;line-height:1.7}
+    .screen-button{
+      display:inline-flex;margin-top:24px;padding:11px 16px;border:1px solid #cbb7a5;
+      border-radius:999px;font-size:10px;letter-spacing:.06em;
+    }
+    .screen-badge{
+      position:absolute;right:26px;bottom:26px;width:58px;height:58px;
+      display:grid;place-items:center;border:1px solid #cbb7a5;border-radius:50%;
+      font:500 26px var(--serif);
+    }
+    .screen-caption{
+      position:absolute;left:34px;bottom:30px;font-size:9px;
+      letter-spacing:.18em;color:#9f8e7f;
+    }
+
+    .marquee{
+      width:100vw;margin-left:calc((100vw - min(1180px,calc(100vw - 40px)))/-2);
+      border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+      overflow:hidden;white-space:nowrap;padding:18px 0;
+      background:var(--paper-2);
+    }
+    .marquee div{
+      width:max-content;animation:marquee 24s linear infinite;
+      font-size:11px;font-weight:700;letter-spacing:.16em;
+    }
+    .marquee span{color:var(--accent);padding:0 16px}
+    @keyframes marquee{to{transform:translateX(-35%)}}
+
+    .section{padding:115px 0}
+    .section-heading{
+      display:grid;grid-template-columns:1fr .65fr;gap:60px;
+      align-items:end;margin-bottom:48px;
+    }
+    .section-heading h2{
+      margin:13px 0 0;font:600 clamp(42px,5vw,68px)/.98 var(--serif);
+      letter-spacing:-.045em;
+    }
+    .section-heading>p{margin:0;color:var(--muted);line-height:1.75;font-size:14px}
+    .service-grid{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line)}
+    .service-card{
+      padding:30px 28px 34px;border-right:1px solid var(--line);
+      min-height:270px;position:relative;
+    }
+    .service-card:first-child{border-left:1px solid var(--line)}
+    .service-card:hover{background:rgba(255,255,255,.22)}
+    .service-number{font-size:11px;color:var(--accent);letter-spacing:.14em}
+    .service-card h3{margin:72px 0 12px;font:600 29px/1.05 var(--serif);letter-spacing:-.03em}
+    .service-card p{margin:0;color:var(--muted);font-size:13px;line-height:1.7}
+
+    .split{display:grid;grid-template-columns:.65fr 1fr;gap:90px;border-top:1px solid var(--line)}
+    .compact{display:block;margin:0}
+    .compact h2{max-width:420px}
+    .skill-list{border-top:1px solid var(--line)}
+    .skill-row{
+      display:grid;grid-template-columns:45px 150px 1fr;gap:20px;
+      align-items:baseline;padding:22px 0;border-bottom:1px solid var(--line);
+    }
+    .skill-row>span{font-size:11px;color:var(--accent)}
+    .skill-row strong{font-size:14px}
+    .skill-row p{margin:0;color:var(--muted);font-size:13px;line-height:1.6}
+
+    .about{padding-top:30px}
+    .about-card{
+      border:1px solid var(--line);border-radius:28px;padding:58px;
+      background:var(--paper-2);
+    }
+    .about-card h2{
+      max-width:850px;margin:18px 0 22px;
+      font:600 clamp(40px,5vw,65px)/1 var(--serif);letter-spacing:-.045em;
+    }
+    .about-card>p{max-width:760px;color:#574b43;font-size:16px;line-height:1.8}
+    .availability{display:flex;align-items:center;gap:10px;margin-top:30px;font-size:12px;color:var(--muted)}
+
+    .contact{
+      margin:0 0 70px;border-radius:30px;background:var(--ink);color:var(--paper);
+      padding:75px 60px;text-align:center;position:relative;overflow:hidden;
+    }
+    .contact:before{
+      content:"";position:absolute;width:420px;height:420px;border-radius:50%;
+      border:1px solid rgba(244,238,229,.12);right:-120px;top:-180px;
+    }
+    .contact .section-kicker{color:#c5b6a8;position:relative}
+    .contact h2{
+      position:relative;margin:18px auto 15px;
+      font:600 clamp(48px,6vw,78px)/.95 var(--serif);letter-spacing:-.05em;
+    }
+    .contact p{position:relative;max-width:620px;margin:0 auto 28px;color:#c7b9ad;line-height:1.7;font-size:14px}
+    .contact .button{position:relative;background:var(--paper);color:var(--ink);border-color:var(--paper)}
+    .contact .button:hover{background:#fff}
+    .socials{position:relative;display:flex;justify-content:center;gap:26px;margin-top:24px;color:#c7b9ad;font-size:12px}
+    .socials a:hover{color:#fff;text-decoration:underline;text-underline-offset:4px}
+
+    footer{
+      width:min(1180px,calc(100% - 40px));margin:0 auto;
+      padding:0 0 34px;display:flex;justify-content:space-between;gap:20px;
+      color:var(--muted);font-size:11px;border-top:1px solid var(--line);padding-top:20px;
+    }
+
+    @media(max-width:900px){
+      .topbar{grid-template-columns:1fr auto}
+      nav{display:none}
+      .hero{grid-template-columns:1fr;gap:42px;padding-top:58px}
+      .hero-card{transform:none}
+      .hero-screen{min-height:470px}
+      .section-heading,.split{grid-template-columns:1fr;gap:28px}
+      .service-grid{grid-template-columns:1fr}
+      .service-card{border-left:1px solid var(--line)!important;border-bottom:1px solid var(--line);border-right:1px solid var(--line)}
+      .service-card h3{margin-top:50px}
+    }
+    @media(max-width:600px){
+      main,.topbar,footer{width:min(100% - 28px,1180px)}
+      .topbar{min-height:68px}
+      .top-cta{padding:9px 12px;font-size:10px}
+      .brand{font-size:13px}
+      .hero{min-height:auto;padding:52px 0 65px}
+      h1{font-size:56px}
+      .hero-text{font-size:15px}
+      .contact-strip{font-size:11px}
+      .hero-screen{min-height:390px;padding:24px}
+      .screen-nav{display:none}
+      .screen-content{margin-top:65px}
+      .screen-headline{font-size:50px}
+      .screen-caption{left:24px}
+      .section{padding:78px 0}
+      .section-heading h2{font-size:46px}
+      .about-card{padding:34px 26px}
+      .contact{padding:55px 24px;margin-bottom:48px}
+      .contact h2{font-size:50px}
+      footer{flex-direction:column}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="noise"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="Antra home">
+      <span class="brand-mark">A</span>
+      <span>ANTRA</span>
+    </a>
+
+    <nav aria-label="Main navigation">
+      <a href="#services">Services</a>
+      <a href="#skills">Skills</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <a class="top-cta" href="https://antra-web.github.io/Antra-Web/" target="_blank" rel="noopener">
+      Live Portfolio ↗
+    </a>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="dot"></span> AVAILABLE FOR WORK</div>
+
+        <h1>Web Designer<br><span>•</span> AI Experience Builder</h1>
+
+        <p class="hero-text">
+          I design and build premium, responsive websites and practical digital
+          experiences — combining strong visual direction, clean front-end
+          development and thoughtful user experience.
+        </p>
+
+        <div class="hero-actions">
+          <a class="button primary" href="#services">Explore services <span>↓</span></a>
+          <a class="button secondary" href="https://antra-web.github.io/Antra-Web/" target="_blank" rel="noopener">
+            See the live portfolios <span>↗</span>
+          </a>
+        </div>
+
+        <div class="contact-strip">
+          <a class="website-link" href="https://antra-web.github.io/Antra-Web/" target="_blank" rel="noopener">ANTRA WEB ↗</a>
+          <span>•</span>
+          <a href="mailto:antra.web.design@gmail.com">antra.web.design@gmail.com</a>
+          <span>•</span>
+          <a href="tel:+916205554151">+91 6205554151</a>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <div class="window-bar">
+          <span></span><span></span><span></span>
+          <div class="window-title">antra-web.github.io/Antra-Web/</div>
+          <a class="window-open" href="https://antra-web.github.io/Antra-Web/" target="_blank" rel="noopener" aria-label="Open live Antra Web portfolio">↗</a>
+        </div>
+
+        <div class="hero-screen">
+          <div class="screen-grid"></div>
+
+          <div class="screen-top">
+            <div class="screen-logo">ANTRA</div>
+            <div class="screen-nav">
+              <span>HOME</span><span>WORK</span><span>ABOUT</span><span>CONTACT</span>
+            </div>
+          </div>
+
+          <div class="screen-content">
+            <div class="screen-kicker">DESIGN • DEVELOP • CREATE</div>
+            <div class="screen-headline">Ideas into <em>digital experiences.</em></div>
+            <p class="screen-copy">
+              Modern websites built around visual identity, usability and a clear purpose.
+            </p>
+            <a class="screen-button" href="https://antra-web.github.io/Antra-Web/" target="_blank" rel="noopener">
+              OPEN ANTRA-WEB ↗
+            </a>
+          </div>
+
+          <div class="screen-caption">WEB DESIGN / FRONT-END / AI</div>
+          <div class="screen-badge">A</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="marquee" aria-label="Capabilities">
+      <div>
+        WEB DESIGN <span>✦</span>
+        FRONT-END DEVELOPMENT <span>✦</span>
+        RESPONSIVE EXPERIENCES <span>✦</span>
+        UI/UX <span>✦</span>
+        AI AGENTS &amp; AUTOMATION <span>✦</span>
+        ANTRA WEB <span>✦</span>
+      </div>
+    </section>
+
+    <section class="section" id="services">
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">WHAT I PROVIDE</span>
+          <h2>Focused work.<br>Built with intent.</h2>
+        </div>
+        <p>
+          A small, clear service set for businesses, brands and creative teams
+          that need polished digital work without unnecessary complexity.
+        </p>
+      </div>
+
+      <div class="service-grid">
+        <article class="service-card">
+          <span class="service-number">01</span>
+          <h3>Premium Websites</h3>
+          <p>
+            Modern, responsive websites with strong visual direction, clear structure
+            and purposeful user journeys.
+          </p>
+        </article>
+
+        <article class="service-card">
+          <span class="service-number">02</span>
+          <h3>UI/UX &amp; Front-End</h3>
+          <p>
+            Polished interfaces translated into responsive, interactive front-end
+            experiences across desktop, tablet and mobile.
+          </p>
+        </article>
+
+        <article class="service-card">
+          <span class="service-number">03</span>
+          <h3>AI Experiences</h3>
+          <p>
+            Practical AI agents and automation experiences that add useful
+            intelligence to websites and digital workflows.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section split" id="skills">
+      <div class="section-heading compact">
+        <span class="section-kicker">SKILLS</span>
+        <h2>Design meets development.</h2>
+      </div>
+
+      <div class="skill-list">
+        <div class="skill-row">
+          <span>01</span>
+          <strong>Design</strong>
+          <p>UI Design · UX Design · Visual Direction · Responsive Design</p>
+        </div>
+        <div class="skill-row">
+          <span>02</span>
+          <strong>Development</strong>
+          <p>HTML · CSS · JavaScript · Responsive Front-End · GitHub</p>
+        </div>
+        <div class="skill-row">
+          <span>03</span>
+          <strong>AI</strong>
+          <p>AI Agents · Automation · Conversational Experiences · AI-assisted workflows</p>
+        </div>
+        <div class="skill-row">
+          <span>04</span>
+          <strong>Professional</strong>
+          <p>Clear Communication · Creative Problem Solving · Attention to Detail</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section about" id="about">
+      <div class="about-card">
+        <span class="section-kicker">A LITTLE ABOUT ME</span>
+        <h2>I build digital experiences with a point of view.</h2>
+        <p>
+          I'm a self-taught web designer and developer focused on practical,
+          project-based work. I enjoy taking an idea from a blank page to a
+          responsive, usable experience with a clear visual identity and a
+          purpose behind every section.
+        </p>
+
+        <div class="availability">
+          <span class="dot"></span>
+          Open to freelance projects, agency collaborations, internships &amp; full-time opportunities.
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="contact-inner">
+        <span class="section-kicker">LET'S WORK TOGETHER</span>
+        <h2>Have a project in mind?</h2>
+        <p>
+          I'm open to freelance projects, agency collaborations and opportunities
+          where I can contribute to thoughtful, well-built digital experiences.
+        </p>
+
+        <a class="button large" href="mailto:antra.web.design@gmail.com">
+          Email Antra ↗
+        </a>
+
+        <div class="socials">
+          <a href="https://antra-web.github.io/Antra-Web/" target="_blank" rel="noopener">Live Portfolio</a>
+          <a href="mailto:antra.web.design@gmail.com">Email</a>
+          <a href="tel:+916205554151">Phone</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>© <span id="year"></span> Antra</span>
+    <span>Web Designer • AI Experience Builder</span>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
